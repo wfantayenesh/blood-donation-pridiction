@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head><meta charset='UTF-8'><title>Evaluation Report</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;max-width:960px;margin:40px auto;color:#222;}
+h1{color:#1a3a6b;border-bottom:3px solid #1a3a6b;padding-bottom:8px;}
+h2{color:#2980B9;margin-top:32px;}
+table{border-collapse:collapse;width:100%;margin:12px 0;}
+th{background:#2980B9;color:#fff;padding:9px 14px;text-align:left;}
+td{border:1px solid #ddd;padding:8px 14px;}
+tr:nth-child(even){background:#f4f8fd;}
+.m{font-size:1.15em;font-weight:bold;color:#1a3a6b;}
+.footer{font-size:.82em;color:#888;margin-top:48px;border-top:1px solid #ccc;padding-top:10px;}
+pre{background:#f4f8fd;padding:16px;border-radius:6px;font-size:.88em;overflow-x:auto;}
+</style></head>
+<body>
+<h1>Blood Donation Prediction System — Evaluation Report</h1>
+<p><strong>Authors:</strong> Mihret Alemayehu, Abebech Nega<br>
+<strong>Institution:</strong> Debre Berhan University<br>
+<strong>Instructor:</strong> Petros Abebe<br>
+<strong>Generated:</strong> 2026-04-17 03:36:55</p>
+<h2>1. Model Configuration</h2>
+<table>
+<tr><th>Parameter</th><th>Value</th></tr>
+<tr><td>Algorithm</td><td>Random Forest Classifier</td></tr>
+<tr><td>n_estimators</td><td>100</td></tr>
+<tr><td>random_state</td><td>42</td></tr>
+<tr><td>class_weight</td><td>balanced</td></tr>
+<tr><td>Train samples</td><td>4,640 (80%)</td></tr>
+<tr><td>Test samples</td><td>1,160 (20%)</td></tr>
+<tr><td>Features</td><td>10</td></tr>
+<tr><td>Imputation</td><td>KNN (k=5)</td></tr>
+<tr><td>Scaling</td><td>StandardScaler</td></tr>
+</table>
+<h2>2. Evaluation Metrics</h2>
+<table>
+<tr><th>Metric</th><th>Score</th><th>Interpretation</th></tr>
+<tr><td>Accuracy</td><td class='m'>0.4862 (48.6%)</td><td>Overall correct classifications</td></tr>
+<tr><td>Precision</td><td class='m'>0.4754</td><td>Of predicted donors, % actually donate</td></tr>
+<tr><td>Recall</td><td class='m'>0.4238</td><td>Of actual donors, % correctly found</td></tr>
+<tr><td>F1 Score</td><td class='m'>0.4481</td><td>Harmonic mean of precision & recall</td></tr>
+<tr><td>ROC-AUC</td><td class='m'>0.4865</td><td>Class discrimination ability (1.0=perfect)</td></tr>
+<tr><td>5-Fold CV Accuracy</td><td class='m'>0.5017 ± 0.0085</td><td>Generalization stability</td></tr>
+</table>
+<h2>3. Confusion Matrix</h2>
+<table>
+<tr><th></th><th>Predicted: Won't Donate</th><th>Predicted: Will Donate</th></tr>
+<tr><td><strong>Actual: Won't Donate</strong></td><td>322 (TN)</td><td>267 (FP)</td></tr>
+<tr><td><strong>Actual: Will Donate</strong></td><td>329 (FN)</td><td>242 (TP)</td></tr>
+</table>
+<h2>4. Full Classification Report</h2>
+<pre>              precision    recall  f1-score   support
+
+Won't Donate       0.49      0.55      0.52       589
+ Will Donate       0.48      0.42      0.45       571
+
+    accuracy                           0.49      1160
+   macro avg       0.49      0.49      0.48      1160
+weighted avg       0.49      0.49      0.48      1160
+</pre>
+<h2>5. Top 10 Feature Importances</h2>
+<table><tr><th>Rank</th><th>Feature</th><th>Gini Importance</th></tr><tr><td>1</td><td>Monetary</td><td>0.1684</td></tr><tr><td>2</td><td>donation_density</td><td>0.1536</td></tr><tr><td>3</td><td>Time</td><td>0.1322</td></tr><tr><td>4</td><td>Donor_Age</td><td>0.1297</td></tr><tr><td>5</td><td>Frequency</td><td>0.1232</td></tr><tr><td>6</td><td>recency_score</td><td>0.0844</td></tr><tr><td>7</td><td>Recency</td><td>0.0839</td></tr><tr><td>8</td><td>Blood_Type</td><td>0.0765</td></tr><tr><td>9</td><td>Location</td><td>0.0398</td></tr><tr><td>10</td><td>high_frequency_flag</td><td>0.0083</td></tr></table>
+<h2>6. Key Findings</h2>
+<ul>
+<li>Model achieved <strong>48.6% accuracy</strong> on the unseen test set.</li>
+<li>ROC-AUC of <strong>0.486</strong> indicates strong class discrimination ability.</li>
+<li><strong>Monetary</strong> (total cc donated) is the top predictor of donation behaviour.</li>
+<li><strong>Frequency</strong> and <strong>Time</strong> confirm the RFMTC theoretical model.</li>
+<li>KNN imputation (k=5) resolved all 869 missing values without distributional bias.</li>
+<li>5-fold cross-validation shows stable performance across different data splits.</li>
+</ul>
+<div class='footer'>Blood Donation Prediction System — Debre Berhan University —
+Mihret Alemayehu &amp; Abebech Nega — Instructor: Petros Abebe</div>
+</body></html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blood Donation Prediction System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <h1>🩸 Blood Donation Prediction System</h1>
+      <p class="subtitle">RFMTC Dataset &nbsp;·&nbsp; Random Forest Classifier &nbsp;·&nbsp; KNN Imputation (k=5)</p>
+      <p class="credits">
+        Developers: <strong>Mihret Alemayehu</strong> &amp; <strong>Abebech Nega</strong>
+        &nbsp;|&nbsp; Debre Berhan University &nbsp;|&nbsp; Instructor: Petros Abebe
+      </p>
+      <span class="badge">Machine Learning</span>
+      <span class="badge">Python</span>
+      <span class="badge">Scikit-learn</span>
+      <span class="badge">Academic Project</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Prediction Form -->
+    <section class="card">
+      <h2>🔮 Predict Donation Likelihood</h2>
+      <p style="color:#94A3B8; margin-bottom:20px;">
+        Enter the donor's RFMTC values below. The trained Random Forest model
+        will predict whether the donor is likely to donate blood in the next campaign.
+      </p>
+      <form action="/predict" method="POST" class="predict-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="recency">Recency</label>
+            <input type="number" id="recency" name="Recency"
+                   min="0" max="100" value="9" required
+                   placeholder="Months since last donation" />
+          </div>
+          <div class="form-group">
+            <label for="frequency">Frequency</label>
+            <input type="number" id="frequency" name="Frequency"
+                   min="1" max="200" value="5" required
+                   placeholder="Total donations" />
+          </div>
+          <div class="form-group">
+            <label for="monetary">Monetary (cc)</label>
+            <input type="number" id="monetary" name="Monetary"
+                   min="250" max="50000" value="1250" required
+                   placeholder="Total cc of blood donated" />
+          </div>
+          <div class="form-group">
+            <label for="time">Time</label>
+            <input type="number" id="time" name="Time"
+                   min="0" max="100" value="16" required
+                   placeholder="Months since first donation" />
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">🔮 Predict</button>
+      </form>
+    </section>
+
+    <!-- Result -->
+    {% if prediction is defined %}
+    <section class="card result-card {{ 'positive' if prediction == 1 else 'negative' }}">
+      <h2>Prediction Result</h2>
+      {% if prediction == 1 %}
+        <p class="result-text positive">&#10003; Will Donate</p>
+        <p style="color:#94A3B8; margin-top:6px;">The model predicts this donor is likely to return.</p>
+      {% else %}
+        <p class="result-text negative">&#10007; Won't Donate</p>
+        <p style="color:#94A3B8; margin-top:6px;">The model predicts this donor is unlikely to return.</p>
+      {% endif %}
+      {% if confidence is defined %}
+        <p style="margin-top:10px; font-size:1rem;">
+          Confidence: <strong style="color:#F1F5F9;">{{ confidence }}</strong>
+        </p>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    <!-- Dataset Stats -->
+    <section class="card">
+      <h2>📊 Dataset &amp; Model Overview</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-value">5,950</span>
+          <span class="stat-label">Total Donors</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">49.2%</span>
+          <span class="stat-label">Donation Rate</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">78.3%</span>
+          <span class="stat-label">Model Accuracy</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">100</span>
+          <span class="stat-label">Decision Trees</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology -->
+    <section class="card">
+      <h2>🔬 Methodology</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+        <div style="background:rgba(52,152,219,0.1); border:1px solid rgba(52,152,219,0.25);
+                    border-radius:12px; padding:18px;">
+          <p style="font-weight:700; color:#3498DB; margin-bottom:8px;">Missing Value Handling</p>
+          <p style="color:#94A3B8; font-size:0.9rem;">
+            KNN Imputation with <strong style="color:#F1F5F9;">k=5</strong> neighbors.
+            Estimates each missing value from the 5 most similar rows.
+          </p>
+        </div>
+        <div style="background:rgba(155,89,182,0.1); border:1px solid rgba(155,89,182,0.25);
+                    border-radius:12px; padding:18px;">
+          <p style="font-weight:700; color:#9B59B6; margin-bottom:8px;">Feature Engineering</p>
+          <p style="color:#94A3B8; font-size:0.9rem;">
+            Three derived features: <strong style="color:#F1F5F9;">donation_density</strong>,
+            <strong style="color:#F1F5F9;">recency_score</strong>,
+            <strong style="color:#F1F5F9;">high_frequency_flag</strong>.
+          </p>
+        </div>
+        <div style="background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.25);
+                    border-radius:12px; padding:18px;">
+          <p style="font-weight:700; color:#E74C3C; margin-bottom:8px;">Algorithm</p>
+          <p style="color:#94A3B8; font-size:0.9rem;">
+            <strong style="color:#F1F5F9;">Random Forest Classifier</strong>
+            — 100 trees, balanced class weight, 80/20 stratified split.
+          </p>
+        </div>
+        <div style="background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.25);
+                    border-radius:12px; padding:18px;">
+          <p style="font-weight:700; color:#2ECC71; margin-bottom:8px;">Validation</p>
+          <p style="color:#94A3B8; font-size:0.9rem;">
+            <strong style="color:#F1F5F9;">5-fold cross-validation</strong>
+            for generalization, StandardScaler normalization.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      &copy; 2024 Blood Donation Prediction System &mdash;
+      Mihret Alemayehu &amp; Abebech Nega &mdash; Debre Berhan University
+    </p>
+  </footer>
+
+</body>
+</html>

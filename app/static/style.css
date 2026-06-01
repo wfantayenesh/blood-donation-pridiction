@@ -1,0 +1,183 @@
+/* ============================================================
+   style.css — Blood Donation Prediction System (Flask UI)
+   Authors: Mihret Alemayehu, Abebech Nega
+   Debre Berhan University | Instructor: Petros Abebe
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  min-height: 100vh;
+  color: #E2E8F0;
+  line-height: 1.65;
+}
+
+.container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Header ──────────────────────────────────────────────── */
+.site-header {
+  background: linear-gradient(135deg, #E74C3C 0%, #9B59B6 50%, #3498DB 100%);
+  padding: 40px 0 32px;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 40px rgba(231,76,60,0.35);
+  position: relative;
+  overflow: hidden;
+}
+.site-header::before {
+  content: "";
+  position: absolute; top: -60px; right: -60px;
+  width: 280px; height: 280px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.site-header::after {
+  content: "";
+  position: absolute; bottom: -80px; left: 10%;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+}
+.site-header h1 {
+  font-size: 2.2rem; font-weight: 800;
+  color: #fff; letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+.site-header .subtitle {
+  font-size: 1rem; color: rgba(255,255,255,0.85); margin-top: 6px;
+}
+.site-header .credits {
+  font-size: 0.85rem; color: rgba(255,255,255,0.7);
+  margin-top: 8px;
+}
+.badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  color: white; border-radius: 20px;
+  padding: 3px 12px; font-size: 0.78rem;
+  margin: 8px 6px 0 0;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.card {
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px;
+  padding: 32px 36px;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 48px rgba(0,0,0,0.28);
+}
+.card h2 {
+  font-size: 1.2rem; color: #F1F5F9;
+  font-weight: 700; margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ── Form ────────────────────────────────────────────────── */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+.form-group label {
+  display: block; font-size: 0.83rem;
+  font-weight: 600; color: #94A3B8;
+  margin-bottom: 6px; text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.form-group input {
+  width: 100%; padding: 10px 14px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 10px;
+  font-size: 0.96rem; color: #F1F5F9;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus {
+  outline: none;
+  border-color: #E74C3C;
+  box-shadow: 0 0 0 3px rgba(231,76,60,0.2);
+}
+
+/* ── Button ──────────────────────────────────────────────── */
+.btn-primary {
+  background: linear-gradient(135deg, #E74C3C, #9B59B6);
+  color: #fff; border: none;
+  padding: 12px 34px; border-radius: 10px;
+  font-size: 1rem; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.02em;
+  box-shadow: 0 4px 20px rgba(231,76,60,0.4);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(231,76,60,0.5);
+}
+.btn-primary:active { transform: translateY(0); }
+
+/* ── Result ──────────────────────────────────────────────── */
+.result-card.positive {
+  background: linear-gradient(135deg, rgba(46,204,113,0.18), rgba(26,188,156,0.12));
+  border-left: 5px solid #2ECC71;
+}
+.result-card.negative {
+  background: linear-gradient(135deg, rgba(231,76,60,0.18), rgba(192,57,43,0.12));
+  border-left: 5px solid #E74C3C;
+}
+.result-text {
+  font-size: 1.6rem; font-weight: 800; margin: 10px 0;
+}
+.result-text.positive { color: #2ECC71; }
+.result-text.negative { color: #E74C3C; }
+
+/* ── Stats Grid ──────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px; margin-top: 16px;
+}
+.stat-box {
+  border-radius: 14px; padding: 20px 16px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.stat-box:hover { transform: scale(1.04); }
+.stat-box:nth-child(1) { background: linear-gradient(135deg,#E74C3C,#C0392B); }
+.stat-box:nth-child(2) { background: linear-gradient(135deg,#9B59B6,#8E44AD); }
+.stat-box:nth-child(3) { background: linear-gradient(135deg,#3498DB,#2980B9); }
+.stat-box:nth-child(4) { background: linear-gradient(135deg,#2ECC71,#27AE60); }
+.stat-value {
+  display: block; font-size: 2rem;
+  font-weight: 800; color: white;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.stat-label {
+  display: block; font-size: 0.78rem;
+  color: rgba(255,255,255,0.8);
+  margin-top: 4px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.site-footer {
+  text-align: center; font-size: 0.82rem;
+  color: rgba(255,255,255,0.4);
+  padding: 28px 0 36px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 36px;
+}

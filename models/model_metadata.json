@@ -1,0 +1,51 @@
+{
+    "project": "Blood Donation Prediction System",
+    "authors": [
+        "Mihret Alemayehu",
+        "Abebech Nega"
+    ],
+    "institution": "Debre Berhan University",
+    "instructor": "Petros Abebe",
+    "algorithm": "Random Forest Classifier",
+    "hyperparameters": {
+        "n_estimators": 100,
+        "random_state": 42,
+        "class_weight": "balanced"
+    },
+    "split": {
+        "test_size": 0.2,
+        "train_size": 0.8,
+        "stratified": true,
+        "random_state": 42
+    },
+    "train_samples": 4640,
+    "test_samples": 1160,
+    "features": [
+        "Donor_Age",
+        "Blood_Type",
+        "Recency",
+        "Frequency",
+        "Monetary",
+        "Time",
+        "Location",
+        "donation_density",
+        "recency_score",
+        "high_frequency_flag"
+    ],
+    "n_features": 10,
+    "evaluation": {
+        "accuracy": 0.4862,
+        "precision": 0.4754,
+        "recall": 0.4238,
+        "f1_score": 0.4481,
+        "roc_auc": 0.4865,
+        "cv_mean_accuracy": 0.5017,
+        "cv_std": 0.0085
+    },
+    "imputation": {
+        "method": "KNN",
+        "n_neighbors": 5
+    },
+    "scaling": "StandardScaler",
+    "saved_at": "2026-04-17 03:36:55"
+}
