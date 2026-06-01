@@ -1,9 +1,7 @@
 # Blood Donation Prediction System
 
 **Course Project | Debre Berhan University**  
-**Instructor:** Petros Abebe  
-**Developers:** Mihret Alemayehu, Abebech Nega
-
+**Developers:** Fantayenesh Worku
 ---
 
 ## Project Overview
